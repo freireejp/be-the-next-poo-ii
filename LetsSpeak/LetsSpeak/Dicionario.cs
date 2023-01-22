@@ -9,23 +9,27 @@ namespace LetsSpeak
 {
     public class Dicionario
     {
+        public string Termo { get; private set; }
+        public string Definicao { get; private set; }
+
         Dictionary<string, string> dicionario = new Dictionary<string, string>();
-        public static void AdicionarTermo(Dictionary<string, string> dicionario)
+
+        public void AdicionarTermo()
         {
             Console.WriteLine("Adicionar um termo ao dicionário\n");
 
             Console.WriteLine("Termo:");
-            string termo = Console.ReadLine();
+            Termo = Console.ReadLine();
 
             Console.WriteLine("Definição:");
-            string definicao = Console.ReadLine();
+            Definicao = Console.ReadLine();
 
-            if (Utils.SomenteLetras(termo))
+            if (Utils.SomenteLetras(Termo))
             {
-                if (!dicionario.ContainsKey(termo.ToLower()))
+                if (!dicionario.ContainsKey(Termo.ToLower()))
                 {
-                    dicionario.Add(termo.ToLower(), definicao.ToLower());
-                    EscreverNoArquivo(termo, definicao);
+                    dicionario.Add(Termo.ToLower(), Definicao.ToLower());
+                    EscreverNoArquivo(Termo, Definicao);
                     Console.WriteLine("\nItens adicionados com sucesso.");
                 }
                 else
@@ -37,10 +41,9 @@ namespace LetsSpeak
             {
                 Console.WriteLine("Use somente letras. Tente novamente.");
             }
-            
         }
 
-        public static void ImprimirDicionario(Dictionary<string, string> dicionario)
+        public void ImprimirDicionario()
         {
             Console.WriteLine("Dicionário:\n");
 
@@ -56,16 +59,16 @@ namespace LetsSpeak
             return dicionario.Where(x => x.Key.ToLower().Contains(termo.ToLower()));
         }
 
-        public static void ProcurarTermo(Dictionary<string, string> dicionario)
+        public void ProcurarTermo()
         {
             Console.WriteLine("Pesquisa:");
-            string termo = Console.ReadLine();
+            string termoProcurado = Console.ReadLine();
 
             Console.WriteLine("Resultado da busca:\n");
 
             Dictionary<string, string> resultados = new Dictionary<string, string>();
-            IEnumerable<KeyValuePair<string, string>> results = ProcurarTermo(dicionario, termo);
-            foreach (var item in results)
+            IEnumerable<KeyValuePair<string, string>> resultadosDaBusca = ProcurarTermo(dicionario, termoProcurado);
+            foreach (var item in resultadosDaBusca)
             {
                 resultados.Add(item.Key, item.Value);
             }
@@ -83,13 +86,11 @@ namespace LetsSpeak
             }
         }
 
-        public static void CarregarDicionario(Dictionary<string, string> dicionario)
+        public void CarregarDicionario()
         {
             if (!File.Exists("dicionario.txt"))
             {
-                //Console.WriteLine("Arquivo de dicionário encontrado.");
                 using (StreamWriter sw = new StreamWriter("dicionario.txt"));
-                //Console.WriteLine("Arquivo carregado com sucesso.");
             }
 
             string[] linhas = File.ReadAllLines("dicionario.txt");

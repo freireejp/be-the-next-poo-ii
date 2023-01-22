@@ -29,9 +29,8 @@ namespace LetsSpeak
 
         static void Main(string[] args)
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            Dicionario.CarregarDicionario(dic);
+            Dicionario dic = new Dicionario();
+            dic.CarregarDicionario();
 
             int input;
 
@@ -47,19 +46,16 @@ namespace LetsSpeak
                         Console.WriteLine("Você escolheu sair.");
                         break;
                     case 1:
-                        Dicionario.AdicionarTermo(dic); break;
+                        dic.AdicionarTermo(); break;
                     case 2:
-                        Dicionario.ProcurarTermo(dic); break;
+                        dic.ProcurarTermo(); break;
                     case 3:
-                        Dicionario.ImprimirDicionario(dic); break;
+                        dic.ImprimirDicionario(); break;
                 }
 
                 Console.WriteLine("\nPressione qualquer tecla para continuar.");
                 Console.ReadKey();
-
             } while (input != 0);
-
-            
         }
     }
 }
